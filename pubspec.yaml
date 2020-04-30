@@ -14,9 +14,27 @@ dependencies:
 
   cupertino_icons: ^0.1.3
 
+  # database
+  cloud_firestore: ^0.13.5
+
+  # state management
+  state_notifier: ^0.4.0
+
+  # di
+  provider: ^4.1.0-dev+3
+
+  # immutable class
+  freezed_annotation:
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+  # code generator
+  build_runner:
+
+  # immutable class
+  freezed:
 
 flutter:
 
