@@ -19,12 +19,16 @@ dependencies:
 
   # state management
   state_notifier: ^0.4.0
+  flutter_state_notifier: ^0.4.2
 
   # di
   provider: ^4.1.0-dev+3
 
   # immutable class
   freezed_annotation:
+
+  # json serialization
+  json_serializable: ^3.3.0
 
 dev_dependencies:
   flutter_test:
@@ -37,6 +41,9 @@ dev_dependencies:
   freezed:
 
 flutter:
-
   uses-material-design: true
+  
+  assets:
+     - assets/images/
+
 
