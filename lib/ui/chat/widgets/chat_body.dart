@@ -24,7 +24,7 @@ class ChatBody extends StatelessWidget {
                   reverse: true,
                   itemCount: data.length,
                   separatorBuilder: (context, index) =>
-                      const SizedBox(height: 16),
+                      const SizedBox(height: 4),
                   itemBuilder: (context, index) {
                     final message = data[index];
                     return ChatBubble(

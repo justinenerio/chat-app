@@ -61,7 +61,6 @@ class Chat extends StatelessWidget {
       body: Column(
         children: <Widget>[
           ChatBody(),
-          const SizedBox(height: 10),
           ChatInput(),
         ],
       ),
