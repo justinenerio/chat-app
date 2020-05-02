@@ -3,7 +3,7 @@ import 'package:chat_app/store/auth/state/auth_state.dart';
 import 'package:state_notifier/state_notifier.dart';
 
 class AuthNotifier extends StateNotifier<AuthState> with LocatorMixin {
-  AuthNotifier(state) : super(state);
+  AuthNotifier(AuthState state) : super(state);
 
   void signUp(String username, String password) async {
     state = AuthState.loading();

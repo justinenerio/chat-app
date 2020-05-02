@@ -5,7 +5,7 @@ class LinkWidget extends StatelessWidget {
 
   final String text;
 
-  final Function onClick;
+  final VoidCallback onClick;
 
   @override
   Widget build(BuildContext context) {

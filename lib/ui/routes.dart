@@ -15,17 +15,18 @@ class Router {
     switch (settings.name) {
       case chat:
         final user = settings.arguments as User;
-        return MaterialPageRoute(builder: (_) => ChatScreen(user: user));
+        return MaterialPageRoute<dynamic>(
+            builder: (_) => ChatScreen(user: user));
 
       case login:
-        return MaterialPageRoute(builder: (_) => LoginScreen());
+        return MaterialPageRoute<dynamic>(builder: (_) => LoginScreen());
 
       case signup:
-        return MaterialPageRoute(builder: (_) => SignUpScreen());
+        return MaterialPageRoute<dynamic>(builder: (_) => SignUpScreen());
 
       case auth:
       default:
-        return MaterialPageRoute(builder: (_) => AuthScreen());
+        return MaterialPageRoute<dynamic>(builder: (_) => AuthScreen());
     }
   }
 }

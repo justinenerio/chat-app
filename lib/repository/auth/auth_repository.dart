@@ -26,7 +26,7 @@ class AuthRepository {
 
     if (userCheck.documents.isEmpty) {
       final userRef = await _userReference.add(
-        {'username': username, 'password': password},
+        <String, dynamic>{'username': username, 'password': password},
       );
 
       return User(

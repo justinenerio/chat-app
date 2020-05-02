@@ -17,7 +17,7 @@ class ChatRepository {
   }
 
   Future<void> sendMessage(String message, User user) async {
-    await _chatReference.add({
+    await _chatReference.add(<String, dynamic>{
       'message': message,
       'fromId': user.id,
       'from': user.username,

@@ -18,6 +18,7 @@ class App extends StatelessWidget {
       ],
       child: MaterialApp(
         title: 'Chat App',
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primarySwatch: Colors.lightGreen,
           visualDensity: VisualDensity.adaptivePlatformDensity,
