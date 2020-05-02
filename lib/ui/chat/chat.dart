@@ -26,6 +26,7 @@ class ChatScreen extends StatelessWidget {
           create: (_) => ChatNotifier(
             ChatState([]),
             repository,
+            user,
           ),
         ),
       ],
