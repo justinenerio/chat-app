@@ -1,4 +1,4 @@
-import 'package:chat_app/models/user.dart';
+import 'package:chat_app/models/auth/user.dart';
 import 'package:chat_app/ui/auth/auth.dart';
 import 'package:chat_app/ui/auth/login.dart';
 import 'package:chat_app/ui/auth/sign_up.dart';

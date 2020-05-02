@@ -1,30 +1,25 @@
 import 'package:flutter/material.dart';
 
 class ChatButton extends StatelessWidget {
-  const ChatButton(
-      {Key key,
-      @required this.text,
-      @required this.onClick,
-      this.color = Colors.green})
-      : super(key: key);
+  const ChatButton({
+    Key key,
+    @required this.onClick,
+    @required this.text,
+  }) : super(key: key);
 
   final String text;
 
   final VoidCallback onClick;
-
-  final Color color;
-
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onClick,
       child: Container(
-        width: MediaQuery.of(context).size.width,
-        height: 55,
+        padding: EdgeInsets.symmetric(horizontal: 12.0),
         decoration: BoxDecoration(
-          color: color,
+          color: Color(0xFF666666),
           borderRadius: BorderRadius.all(
-            Radius.circular(10.0),
+            Radius.circular(3.0),
           ),
         ),
         child: Center(
@@ -32,8 +27,9 @@ class ChatButton extends StatelessWidget {
             text,
             style: TextStyle(
               color: Colors.white,
+              fontSize: 16.0,
+              letterSpacing: 1.0,
               fontWeight: FontWeight.bold,
-              fontSize: 18,
             ),
           ),
         ),

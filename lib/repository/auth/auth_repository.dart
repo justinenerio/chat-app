@@ -1,4 +1,4 @@
-import 'package:chat_app/models/user.dart';
+import 'package:chat_app/models/auth/user.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AuthRepository {
@@ -20,19 +20,21 @@ class AuthRepository {
   }
 
   Future<User> signUp(String username, String password) async {
-    final userRef = await _userReference.add(
-      {'username': username, 'password': password},
-    );
+    final userCheck = await _userReference
+        .where("username", isEqualTo: username)
+        .getDocuments();
 
-    if (userRef.documentID != null) {
+    if (userCheck.documents.isEmpty) {
+      final userRef = await _userReference.add(
+        {'username': username, 'password': password},
+      );
+
       return User(
         id: userRef.documentID,
         username: username,
       );
+    } else {
+      return null;
     }
-
-    return null;
   }
-
-  void logout() {}
 }

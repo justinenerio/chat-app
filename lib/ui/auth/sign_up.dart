@@ -1,7 +1,7 @@
-import 'package:chat_app/models/user.dart';
-import 'package:chat_app/store/auth/signup_notifier.dart';
+import 'package:chat_app/models/auth/user.dart';
+import 'package:chat_app/store/auth/auth_notifier.dart';
 import 'package:chat_app/store/auth/state/auth_state.dart';
-import 'package:chat_app/ui/auth/widgets/chat_button.dart';
+import 'package:chat_app/ui/auth/widgets/auth_button.dart';
 import 'package:chat_app/ui/auth/widgets/clickable_link.dart';
 import 'package:chat_app/ui/auth/widgets/input_form.dart';
 import 'package:chat_app/ui/auth/widgets/terms_text.dart';
@@ -13,8 +13,8 @@ import 'package:provider/provider.dart';
 class SignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return StateNotifierProvider<SignUpNotifier, AuthState>(
-      create: (_) => SignUpNotifier(AuthState.initial()),
+    return StateNotifierProvider<AuthNotifier, AuthState>(
+      create: (_) => AuthNotifier(AuthState.initial()),
       child: SignUp(),
     );
   }
@@ -31,7 +31,7 @@ class SignUp extends StatelessWidget {
   void onSignUpClick(BuildContext context) {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
-      context.read<SignUpNotifier>().signUp(auth.username, auth.password);
+      context.read<AuthNotifier>().signUp(auth.username, auth.password);
     }
   }
 
@@ -41,7 +41,7 @@ class SignUp extends StatelessWidget {
       builder: (context) {
         return AlertDialog(
           title: Text("Error"),
-          content: Text("Please try again"),
+          content: Text("Username already exists."),
           actions: [
             FlatButton(
               child: Text("OK"),
@@ -60,23 +60,24 @@ class SignUp extends StatelessWidget {
         arguments: user);
   }
 
-  void listener(BuildContext context) {
-    context.watch<AuthState>().maybeWhen(
-          success: (User user) {
-            WidgetsBinding.instance
-                .addPostFrameCallback((_) => onSignUpSuccess(context, user));
-          },
-          error: () {
-            WidgetsBinding.instance
-                .addPostFrameCallback((_) => _showDialog(context));
-          },
-          orElse: () {},
-        );
+  void listener(BuildContext context, AuthState state) {
+    state.maybeWhen(
+      success: (User user) {
+        WidgetsBinding.instance
+            .addPostFrameCallback((_) => onSignUpSuccess(context, user));
+      },
+      error: () {
+        WidgetsBinding.instance
+            .addPostFrameCallback((_) => _showDialog(context));
+      },
+      orElse: () {},
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    listener(context);
+    final notifier = Provider.of<AuthNotifier>(context, listen: false);
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Chat app'),
@@ -94,14 +95,20 @@ class SignUp extends StatelessWidget {
               formKey: _formKey,
             ),
             const SizedBox(height: 15),
-            context.watch<AuthState>().maybeMap(
-                  loading: (_) => CircularProgressIndicator(),
-                  orElse: () => ChatButton(
-                    text: 'Sign Up',
+            StateNotifierBuilder<AuthState>(
+              stateNotifier: notifier,
+              builder: (BuildContext context, AuthState state, Widget child) {
+                listener(context, state);
+                return state.maybeWhen(
+                  loading: () => CircularProgressIndicator(),
+                  orElse: () => AuthButton(
+                    text: 'Sign up',
                     color: Color(0xFF88e306),
                     onClick: () => onSignUpClick(context),
                   ),
-                ),
+                );
+              },
+            ),
             const SizedBox(height: 8),
             LinkWidget(
               text: 'Login',

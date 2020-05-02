@@ -1,4 +1,4 @@
-import 'package:chat_app/ui/auth/widgets/chat_button.dart';
+import 'package:chat_app/ui/auth/widgets/auth_button.dart';
 import 'package:chat_app/ui/routes.dart';
 import 'package:flutter/material.dart';
 
@@ -28,13 +28,13 @@ class AuthScreen extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: 60),
-                ChatButton(
+                AuthButton(
                   text: 'Sign up',
                   color: Color(0xFF62a304),
                   onClick: () => Navigator.pushNamed(context, Router.signup),
                 ),
                 const SizedBox(height: 15),
-                ChatButton(
+                AuthButton(
                   text: 'Login',
                   color: Color(0xFF88e306),
                   onClick: () => Navigator.pushNamed(context, Router.login),

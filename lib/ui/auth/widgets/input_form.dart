@@ -17,12 +17,22 @@ class InputForm extends StatefulWidget {
 }
 
 class _InputFormState extends State<InputForm> {
+  final FocusNode _usernameFocus = FocusNode();
+  final FocusNode _passwordFocus = FocusNode();
+
   String _validateField(String value) {
     if (value.length < 8 || value.length > 16) {
       return 'Value is incorrect';
     }
 
     return null;
+  }
+
+  @override
+  void dispose() {
+    _usernameFocus.dispose();
+    _passwordFocus.dispose();
+    super.dispose();
   }
 
   @override
@@ -35,6 +45,11 @@ class _InputFormState extends State<InputForm> {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: TextFormField(
+                focusNode: _usernameFocus,
+                onFieldSubmitted: (_) {
+                  _usernameFocus.unfocus();
+                  FocusScope.of(context).requestFocus(_passwordFocus);
+                },
                 onSaved: (val) => widget.formModel.username = val,
                 decoration: InputDecoration(
                   isDense: true,
@@ -59,6 +74,10 @@ class _InputFormState extends State<InputForm> {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: TextFormField(
+                focusNode: _passwordFocus,
+                onFieldSubmitted: (_) {
+                  _passwordFocus.unfocus();
+                },
                 onSaved: (val) => widget.formModel.password = val,
                 obscureText: true,
                 decoration: InputDecoration(
