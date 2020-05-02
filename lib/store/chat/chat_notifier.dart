@@ -7,7 +7,9 @@ import 'package:chat_app/store/chat/state/chat_state.dart';
 import 'package:state_notifier/state_notifier.dart';
 
 class ChatNotifier extends StateNotifier<ChatState> with LocatorMixin {
-  ChatNotifier(ChatState state) : super(state);
+  ChatNotifier(ChatState state, this.repository) : super(state);
+
+  final ChatRepository repository;
 
   StreamSubscription<List<Message>> _stream;
   @override
@@ -17,7 +19,7 @@ class ChatNotifier extends StateNotifier<ChatState> with LocatorMixin {
   }
 
   void getMessages() async {
-    read<ChatRepository>().watchMessages().then((stream) {
+    repository.watchMessages().then((stream) {
       _stream = stream.listen(messageListener);
     });
   }
@@ -34,6 +36,6 @@ class ChatNotifier extends StateNotifier<ChatState> with LocatorMixin {
 
   void sendMessage(String message) {
     final user = read<User>();
-    read<ChatRepository>().sendMessage(message, user);
+    repository.sendMessage(message, user);
   }
 }

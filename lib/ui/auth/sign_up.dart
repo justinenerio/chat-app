@@ -1,4 +1,5 @@
 import 'package:chat_app/models/auth/user.dart';
+import 'package:chat_app/repository/auth/auth_repository.dart';
 import 'package:chat_app/store/auth/auth_notifier.dart';
 import 'package:chat_app/store/auth/state/auth_state.dart';
 import 'package:chat_app/ui/auth/widgets/auth_button.dart';
@@ -13,8 +14,13 @@ import 'package:provider/provider.dart';
 class SignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final repository = Provider.of<AuthRepository>(context, listen: false);
+
     return StateNotifierProvider<AuthNotifier, AuthState>(
-      create: (_) => AuthNotifier(AuthState.initial()),
+      create: (_) => AuthNotifier(
+        AuthState.initial(),
+        repository,
+      ),
       child: SignUp(),
     );
   }

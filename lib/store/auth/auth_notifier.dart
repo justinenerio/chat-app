@@ -3,12 +3,14 @@ import 'package:chat_app/store/auth/state/auth_state.dart';
 import 'package:state_notifier/state_notifier.dart';
 
 class AuthNotifier extends StateNotifier<AuthState> with LocatorMixin {
-  AuthNotifier(AuthState state) : super(state);
+  AuthNotifier(AuthState state, this.repository) : super(state);
+
+  final AuthRepository repository;
 
   void signUp(String username, String password) async {
     state = AuthState.loading();
 
-    final user = await read<AuthRepository>().signUp(username, password);
+    final user = await repository.signUp(username, password);
 
     if (user != null) {
       state = AuthState.success(user);
@@ -20,7 +22,7 @@ class AuthNotifier extends StateNotifier<AuthState> with LocatorMixin {
   void login(String username, String password) async {
     state = AuthState.loading();
 
-    final user = await read<AuthRepository>().login(username, password);
+    final user = await repository.login(username, password);
 
     if (user != null) {
       state = AuthState.success(user);

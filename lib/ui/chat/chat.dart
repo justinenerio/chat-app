@@ -1,4 +1,5 @@
 import 'package:chat_app/models/auth/user.dart';
+import 'package:chat_app/repository/chat/chat_repository.dart';
 import 'package:chat_app/store/chat/chat_notifier.dart';
 import 'package:chat_app/store/chat/state/chat_state.dart';
 import 'package:chat_app/ui/chat/widgets/chat_body.dart';
@@ -16,11 +17,16 @@ class ChatScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final repository = Provider.of<ChatRepository>(context, listen: false);
+
     return MultiProvider(
       providers: [
         Provider<User>.value(value: user),
         StateNotifierProvider<ChatNotifier, ChatState>(
-          create: (_) => ChatNotifier(ChatState([])),
+          create: (_) => ChatNotifier(
+            ChatState([]),
+            repository,
+          ),
         ),
       ],
       child: Chat(),
